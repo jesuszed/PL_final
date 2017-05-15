@@ -1,0 +1,25 @@
+1º lexico.l
+_palabra 	{?i:_palabra}
+
+luego más abajo
+
+{_palabra}	{return PALABRA;}
+
+
+2º interprete.y
+
+En definiciones regulares
+operadores %left o %right y PALABRA
+leer leer_cadena se añaden en linea 30 %token
+
+luego más abajo en expr:
+| expr PALABRA expr {code(funcion_palabra);}
+
+3º en code.c
+añadir la funcion
+
+void funcion_palabra(){...}
+
+4º interprete.h
+
+Añadir la cabecera de la funcion
