@@ -312,6 +312,83 @@ void leervariable() /* Leer una variable numerica por teclado */
      execerror("No es una variable",variable->nombre);
 }           
 
+void leercadena() /* Leer una variable numerica por teclado */
+{
+ Symbol *variable;
+
+ char c[1000];
+ char n;
+ int i=0, j=0;
+
+ variable = (Symbol *)(*pc); 
+
+ /* Se comprueba si el identificador es una variable */ 
+  if ((variable->tipo == INDEFINIDA) || variable->tipo == VAR) 
+    { 
+    printf("Valor--> ");
+    fgets(c, 1000, stdin);
+    c[strlen(c)-1]='\0';
+  
+    if(c[0]=='\'')
+      i=1;
+
+/*Mientras que no se llegue al final*/
+     while (c[i] != '\0')
+        {
+          if ( ('\\' != c[i]) )
+          {
+            c[j] = c[i];    
+          }else{
+            i++;
+            if('t' != c[i] && 'n' != c[i]){
+              c[j]=c[i];
+            }else{
+              if('n' == c[i])
+                c[j]='\n';
+              else
+                c[j]='\t';
+            } 
+          }
+          j++;
+          i++;
+        }
+        if(c[j-1]=='\'')
+          c[j-1]='\0';
+        else
+          c[j]='\0';
+    variable->u.val=0.0;
+    strcpy(variable->u.chain, c);
+    variable->tipo=VAR;
+    variable->subtipo=CADENA;
+    
+    pc++;
+   }
+ else
+     execerror("No es una cadena",variable->nombre);
+}   
+
+void escribir() /* escribir el valor sacado de la pila */
+{
+ Datum d;
+
+ d=pop();  /* Obtener numero */
+  if(d.subtipo==NUMBER)
+   printf("\t ---> %.8g\n",d.val);
+ else
+    execerror("No es un dato numerico", NULL);
+}
+
+void escribircadena() /*escribir cadena sacada de la pila*/
+{ 
+ Datum d;
+ 
+ d=pop();
+ if(d.subtipo== CADENA)
+   printf("\t ---> %s\n",d.chain);
+ else
+  execerror("No es una cadena", NULL);
+
+}
 
 void mayor_que()
 {

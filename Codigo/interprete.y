@@ -17,7 +17,7 @@
 }
 
 /* Definiciones regulares */
-%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA PRINT WHILE IF ELSE READ
+%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR
 
 %type <inst> stmt asgn expr stmtlist cond while if end
 
@@ -40,18 +40,21 @@ list :    /* nada: epsilon produccion */
 stmt :    /* nada: epsilon produccion */  {$$=progp;}
         | asgn          {code(pop2);}
 	   | PRINT expr    {code(escribir); $$ = $2;}
-        | READ '(' VAR ')'    {code2(leervariable,(Inst)$3);}
-        | while cond stmt end  
+        | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
+        | LEER_CADENA '(' VAR ')' {code2(leercadena,(Inst)$3);}
+        | ESCRIBIR '(' expr ')'    {code(escribir); $$ = $3;}
+        | ESCRIBIR_CADENA '(' expr ')'   {code(escribircadena); $$ = $3;}
+        | mientras cond HACER stmtlist FIN_MIENTRAS end  
                   {
                    ($1)[1]=(Inst)$3; /* cuerpo del bucle */
                    ($1)[2]=(Inst)$4; /* siguiente instruccion al bucle */
                   }
-        | if cond stmt end /* proposicion if sin parte else */
+        | si cond ENTONCES end /* proposicion if sin parte else */
                   {
                    ($1)[1]=(Inst)$3; /* cuerpo del if */
                    ($1)[3]=(Inst)$4; /* siguiente instruccion al if */
                   }
-        | if cond stmt end ELSE stmt end /* proposicion if con parte else */
+        | si cond ENTONCES end SI_NO stmt end /* proposicion if con parte else */
                   {
                    ($1)[1]=(Inst)$3; /* cuerpo del if */
                    ($1)[2]=(Inst)$6; /* cuerpo del else */
@@ -69,10 +72,10 @@ asgn :    VAR ASIGNACION expr { $$=$3; code3(varpush,(Inst)$1,assign);}
 cond :    '(' expr ')' {code(STOP); $$ =$2;}
         ;
 
-while:    WHILE      {$$= code3(whilecode,STOP,STOP);}
+mientras:    MIENTRAS      {$$= code3(whilecode,STOP,STOP);}
         ;
 
-if:       IF         {$$= code(ifcode); code3(STOP,STOP,STOP);}
+si:       SI         {$$= code(ifcode); code3(STOP,STOP,STOP);}
         ;
 
 end :    /* nada: produccion epsilon */  {code(STOP); $$ = progp;}

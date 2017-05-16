@@ -25,11 +25,17 @@ static struct{   /* palabras clave */
           char *nombre;
 	      int  kval;
 	      } keywords[] = {
-                "si",        IF,
-			          "si_no",      ELSE,
-			         "mientras",     WHILE,
-			         "print",     PRINT,
-               "read",      READ,
+                "si",        SI,
+			          "si_no",      SI_NO,
+			         "mientras",     MIENTRAS,
+               "fin_si",  FIN_SI,
+               "leer",      LEER,
+               "leer_cadena", LEER_CADENA,
+               "escribir",  ESCRIBIR,
+               "escribir_cadena", ESCRIBIR_CADENA,
+               "entonces", ENTONCES,
+               "hacer", HACER,
+               "repetir", REPETIR,
                 0,           0,
                              };
 

@@ -111,5 +111,8 @@ void o_logic();
 void no_logic();
 
 void leervariable();
+void leercadena();
+void escribir();
+void escribir_cadena();
 
 #endif
