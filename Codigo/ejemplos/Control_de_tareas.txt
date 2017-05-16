@@ -37,7 +37,7 @@ PALABRAS RESERVADAS:		[ ]							CHECK
 		si_no											[x]
 		fin_si											[x]
 
-	SENTENCIA DE BUCLE MIENTRAS:						[ ]
+	SENTENCIA DE BUCLE MIENTRAS:						[x ]
 		mientras										[x]
 		hacer											[x]
 		fin_mientras									[x]
@@ -46,12 +46,12 @@ PALABRAS RESERVADAS:		[ ]							CHECK
 		repetir											[ ]
 		hasta											[ ]
 
-	SENTENCIA DE BUCLE PARA:							[ ]
-		para											[ ]
-		desde											[ ]
-		hasta											[ ]
-		paso											[ ]
-		fin_para										[ ]
+	SENTENCIA DE BUCLE PARA:							[x]
+		para											[x]
+		desde											[x]
+		hasta											[x]
+		paso											[x]
+		fin_para										[x]
 
 	MACROS:												[ ]
 		_borrar											[ ]

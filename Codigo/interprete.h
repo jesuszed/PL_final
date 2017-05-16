@@ -99,6 +99,8 @@ void varpush();
 
 void ifcode();
 void whilecode();
+//void repetircode();
+void paracode();
 
 void mayor_que();
 void menor_que();
@@ -114,5 +116,7 @@ void leervariable();
 void leercadena();
 void escribir();
 void escribir_cadena();
+
+
 
 #endif

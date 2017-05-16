@@ -36,6 +36,11 @@ static struct{   /* palabras clave */
                "entonces", ENTONCES,
                "hacer", HACER,
                "repetir", REPETIR,
+               "para", PARA,
+               "desde", DESDE,
+               "hasta", HASTA,
+               "paso", PASO,
+               "fin_para", FIN_PARA,
                 0,           0,
                              };
 

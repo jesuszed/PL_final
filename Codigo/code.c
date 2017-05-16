@@ -583,3 +583,26 @@ void ifcode()
  pc= *((Inst **)(savepc+2));
 }
 
+void paracode()
+{
+  Datum desde, hasta, paso;
+  Symbol* variable;
+  Inst *savepc = pc;
+
+  variable = *((Symbol **)(savepc+5));
+  variable->tipo = VAR;
+  variable->subtipo = NUMBER;
+
+  execute(*((Inst **)(savepc)));
+  desde = pop();
+  execute(*((Inst **)(savepc+1)));
+  hasta = pop();
+  execute(*((Inst **)(savepc+2)));
+  paso = pop();
+
+  for(variable->u.val=desde.val; variable->u.val <= hasta.val; (variable->u.val)=(variable->u.val+paso.val) )
+  {
+    execute(*((Inst **)(savepc+3)));
+  }
+}
+

@@ -17,9 +17,9 @@
 }
 
 /* Definiciones regulares */
-%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR
+%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR PARA DESDE HASTA PASO FIN_PARA
 
-%type <inst> stmt asgn expr stmtlist cond while if end
+%type <inst> stmt asgn expr stmtlist cond while if end para
 
 %right ASIGNACION
 %left O_LOGICO
@@ -61,6 +61,17 @@ stmt :    /* nada: epsilon produccion */  {$$=progp;}
                    ($1)[3]=(Inst)$7; /* siguiente instruccion al if-else */
                   }
         | '{' stmtlist '}'  {$$ = $2;}
+
+        | para variable DESDE expr end HASTA expr end PASO expr end HACER stmlist FIN_PARA  end
+        {
+            ($1)[1] = (Inst) ; /* Desde */
+            ($1)[2] = (Inst) ; /* hasta */
+            ($1)[3] = (Inst) ; /* paso */
+            ($1)[4] = (Inst) ; /* cuerpo for */
+            ($1)[5] = (Inst) ; /* Siguiente instruccion a for */
+
+
+        }
         ;
 
 
@@ -68,6 +79,9 @@ asgn :    VAR ASIGNACION expr { $$=$3; code3(varpush,(Inst)$1,assign);}
         | CONSTANTE ASIGNACION expr 
           {execerror(" NO se pueden asignar datos a constantes ",$1->nombre);}
 	;
+
+variable :    VAR {code((Inst)$1); $$ = progp;}
+        ;
 
 cond :    '(' expr ')' {code(STOP); $$ =$2;}
         ;
@@ -80,6 +94,8 @@ si:       SI         {$$= code(ifcode); code3(STOP,STOP,STOP);}
 
 end :    /* nada: produccion epsilon */  {code(STOP); $$ = progp;}
         ;
+
+para: PARA {$$ = code3(paracode, STOP, STOP); code3(STOP, STOP, STOP);}
 
 stmtlist:  /* nada: prodcuccion epsilon */ {$$=progp;}
         | stmtlist stmt ';'
