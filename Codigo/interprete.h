@@ -106,9 +106,9 @@ void mayor_igual();
 void menor_igual();
 void igual(); 
 void distinto();
-void y_logico();
-void o_logico();
-void negacion();
+void y_logic();
+void o_logic();
+void no_logic();
 
 void leervariable();
 

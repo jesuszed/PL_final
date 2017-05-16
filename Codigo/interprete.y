@@ -22,8 +22,9 @@
 %type <inst> stmt asgn expr stmtlist cond while if end
 
 %right ASIGNACION
-%left _O
-%left _Y
+%left O_LOGICO
+%left Y_LOGICO
+%left NO_LOGICO
 %left MAYOR_QUE MENOR_QUE MENOR_IGUAL MAYOR_IGUAL DISTINTO IGUAL
 %left '+' '-'
 %left '*' MOD DIV DIV_ENT
@@ -105,7 +106,9 @@ expr :    NUMBER     		{$$=code2(constpush,(Inst)$1);}
         | expr MENOR_IGUAL expr {code(menor_igual);}
         | expr IGUAL expr 	{code(igual);}
         | expr DISTINTO expr 	{code(distinto);}
-
+        | expr O_LOGICO expr {code(o_logico);}
+        | expr Y_LOGICO expr {code(y_logico);}
+        | expr NO_LOGICO expr {code(no_logico);}
       	;
 
 %%

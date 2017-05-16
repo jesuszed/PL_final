@@ -1,5 +1,5 @@
 1º lexico.l
-_palabra 	{?i:_palabra}
+_palabra 	(?i:_palabra)
 
 luego más abajo
 

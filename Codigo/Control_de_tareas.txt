@@ -19,11 +19,11 @@ NO EXISTEN CONFLICTOS EN LAS REGLAS DE PRODUCCIÓN:		[ ]
 PALABRAS RESERVADAS:		[ ]							CHECK
 -----------------------------------------------------------------
 	_mod												[X]
-	_div												[ ]
+	_div												[x]
 
-	_o 													[ ]
-	_y													[ ]
-	_no													[ ]
+	_o 													[x]
+	_y													[x]
+	_no													[x]
 
 	leer												[ ]
 	leer_cadena											[ ]

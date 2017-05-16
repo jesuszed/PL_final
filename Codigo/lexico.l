@@ -12,8 +12,13 @@ extern int lineno;
 numero        [0-9]
 letra         [a-zA-Z]
 identificador {letra}({letra}|{numero})*
-_mod  (?i:_mod)
-_div  (?i:_div)
+
+_mod  	(?i:_mod)
+_div  	(?i:_div)
+_o 		(?i:_o)
+_y		(?i:_y)
+_no		(?i:_no)
+
 %%
 [\t] { ; } /* saltar los espacios y los tabuladores */
 
@@ -23,8 +28,11 @@ _div  (?i:_div)
 				   						yylval.sym=install("",NUMBER,d); 
 				   						return NUMBER;}
 
-{_mod}	{return MOD;}
-{_div}	{return DIV_ENT;}
+{_mod}		{return MOD;}
+{_div}		{return DIV_ENT;}
+{_o}		{return O_LOGICO;}
+{_y}		{return Y_LOGICO;}
+{_no}		{return NO_LOGICO;}
 
 {identificador} { Symbol *s;
 					int i=0;
@@ -44,9 +52,6 @@ _div  (?i:_div)
 "!="	{return DISTINTO;}
 ">"		{return MAYOR_QUE;}
 "<"		{return MENOR_QUE;}
-"!"		{return NEGACION;}
-"||"	{return O_LOGICO;}
-"&&"	{return Y_LOGICO;}
 ":="    {return ASIGNACION;}
 
 "/"		{return DIV;}
