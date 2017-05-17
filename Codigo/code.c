@@ -206,18 +206,25 @@ void modulo()
  if (d2.val == 0.0)
      execerror (" Division por cero ", (char *) 0);
  
- d1.val = (int) d1.val % (int)  d2.val;  /* Resto */
- push(d1);                               /* Apilar el resultado */
+ if(d1.subtipo== NUMBER && d2.subtipo ==NUMBER)
+   d1.val = (int) d1.val % (int)  d2.val;  /* Resto */
+  else
+    execerror("NO SON DE TIPO NUMERICO", NULL); 
+  push(d1);                               /* Apilar el resultado */
 }
 
 void multiplicar() /* multiplicar los dos valores superiores de la pila */
 {
+
  Datum d1,d2;
  
  d2=pop();                   /* Obtener el primer numero  */
  d1=pop();                   /* Obtener el segundo numero */
- d1.val = d1.val * d2.val;   /* Multiplicar               */
- push(d1);                   /* Apilar el resultado       */
+  if(d1.subtipo== NUMBER && d2.subtipo ==NUMBER)
+    d1.val = d1.val * d2.val;   /* Multiplicar               */
+  else
+    execerror("NO SON DE TIPO NUMERICO", NULL);
+  push(d1);                   /* Apilar el resultado       */
 }
 
 void negativo() /* negacion del valor superior de la pila */
@@ -246,7 +253,8 @@ void potencia()  /* exponenciacion de los valores superiores de la pila */
  d2=pop();                      /* Obtener exponente   */
  d1=pop();                      /* Obtener base        */
  
- if ( (d1.val>=0) || ((int)d2.val == d2.val) )
+if(d1.subtipo== NUMBER && d2.subtipo ==NUMBER){
+    if ( (d1.val>=0) || ((int)d2.val == d2.val) )
   {
    d1.val = pow(d1.val,d2.val);   /* Elevar a potencia   */
    push(d1);                      /* Apilar el resultado */
@@ -256,7 +264,10 @@ void potencia()  /* exponenciacion de los valores superiores de la pila */
    char digitos[20];
    sprintf(digitos,"%lf",d1.val);
    execerror(" radicando negativo ", digitos);
-  }
+  }  
+}else
+    execerror("NO SON DE TIPO NUMERICO", NULL);
+
 
 }
 
@@ -266,8 +277,10 @@ void restar()   /* restar los dos valores superiores de la pila */
  
  d2=pop();                   /* Obtener el primer numero  */
  d1=pop();                   /* Obtener el segundo numero */
- d1.val = d1.val - d2.val;   /* Restar                    */
- push(d1);                   /* Apilar el resultado       */
+if(d1.subtipo== NUMBER && d2.subtipo== NUMBER)
+    d1.val = d1.val - d2.val;   /* Restar                     */
+  else
+    execerror("NO SON DE TIPO NUMERICO", NULL); push(d1); push(d1);                   /* Apilar el resultado       */
 }
 
 void sumar()   /* sumar los dos valores superiores de la pila */
@@ -276,8 +289,10 @@ void sumar()   /* sumar los dos valores superiores de la pila */
  
  d2=pop();                   /* Obtener el primer numero  */
  d1=pop();                   /* Obtener el segundo numero */
- d1.val = d1.val + d2.val;   /* Sumar                     */
- push(d1);                   /* Apilar el resultado       */
+if(d1.subtipo== NUMBER && d2.subtipo== NUMBER)
+    d1.val = d1.val + d2.val;   /* Sumar                     */
+  else
+    execerror("NO SON DE TIPO NUMERICO", NULL); push(d1);                   /* Apilar el resultado       */
 }
 
 void varpush()  /* meter una variable en la pila */
@@ -504,11 +519,19 @@ void y_logico()
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
  
- if (d1.val==1 && d2.val==1)
+ if( (d1.subtipo == NUMBER && d2.subtipo == NUMBER)  )
+  {
+  if (d1.val==1 && d2.val==1)
    d1.val= 1;
  else 
    d1.val=0;
  
+ }else{
+    execerror("NO SON DE TIPO NUMERICO", NULL);
+ }
+
+
+  d1.subtipo=NUMBER;
  push(d1);    /* Apilar el resultado */
 }
 
@@ -520,11 +543,18 @@ void o_logico()
  d2=pop();    /* Obtener el primer numero  */
  d1=pop();    /* Obtener el segundo numero */
  
+
+ if( (d1.subtipo == NUMBER && d2.subtipo == NUMBER)  )
+  {
  if (d1.val==1 || d2.val==1)
    d1.val= 1;
  else
    d1.val=0;
  
+ }else{
+    execerror("NO SON DE TIPO NUMERICO", NULL);
+ }
+  d1.subtipo=NUMBER;
  push(d1);    /* Apilar resultado */
 }
 
@@ -564,6 +594,24 @@ void whilecode()
 /* la siguiente instruccion a ejecutar */ 
  
  pc= *((Inst **)(savepc+1));  
+}
+
+void concatenacion(){
+ Datum d1,d2;
+ 
+ d2=pop();                   /* Obtener el primer numero  */
+ d1=pop();                   /* Obtener el segundo numero */
+
+
+ if(d1.subtipo == CADENA && d2.subtipo == CADENA)
+   strcat(d1.chain, d2.chain);   /* Concatenar*/
+ else{
+  if(d1.subtipo == NUMBER && d2.subtipo == NUMBER)
+   execerror("Son numeros", NULL);
+    else
+   execerror("No es una cadena", NULL);
+  }
+ push(d1); 
 }
 
 void ifcode()

@@ -101,6 +101,8 @@ void ifcode();
 void whilecode();
 //void repetircode();
 void paracode();
+void concatenacion();
+
 
 void mayor_que();
 void menor_que();

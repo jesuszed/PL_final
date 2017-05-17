@@ -26,10 +26,11 @@
 %left Y_LOGICO
 %left NO_LOGICO
 %left MAYOR_QUE MENOR_QUE MENOR_IGUAL MAYOR_IGUAL DISTINTO IGUAL
-%left '+' '-'
-%left '*' MOD DIV DIV_ENT
+%left SUMA RESTA
+%left PROD MOD DIV DIV_ENT
 %left UNARIO _NO
 %right POTENCIA
+%left CONCAT
 %%
 
 list :    /* nada: epsilon produccion */ 
@@ -111,13 +112,13 @@ expr :    NUMBER     		{$$=code2(constpush,(Inst)$1);}
         | FUNCION2_PREDEFINIDA '(' expr ',' expr ')'
                                             {$$=$3;code2(funcion2,(Inst)$1->u.ptr);}
         | '(' expr ')'  	{$$ = $2;}
-        | expr '+' expr 	{code(sumar);}
-        | expr '-' expr 	{code(restar);}
-        | expr '*' expr 	{code(multiplicar);}
+        | expr SUMA expr 	{code(sumar);}
+        | expr RESTA expr 	{code(restar);}
+        | expr PROD expr 	{code(multiplicar);}
         | expr DIV expr 	{code(dividir);}
         | expr DIV_ENT expr {code(dividir_entero);}
         | expr MOD expr 	{code(modulo);}
-        | expr '^' expr 	{code(potencia);}
+        | expr POTENCIA expr 	{code(potencia);}
         |'-' expr %prec UNARIO 	{$$=$2; code(negativo);}
         |'+' expr %prec UNARIO 	{$$=$2; code(positivo);}
         | expr MAYOR_QUE expr 	{code(mayor_que);}
@@ -129,6 +130,8 @@ expr :    NUMBER     		{$$=code2(constpush,(Inst)$1);}
         | expr O_LOGICO expr {code(o_logico);}
         | expr Y_LOGICO expr {code(y_logico);}
         | expr NO_LOGICO expr {code(no_logico);}
+        | expr CONCAT expr {code(concatenacion);}
+
       	;
 
 %%

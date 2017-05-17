@@ -9,9 +9,12 @@ extern int lineno;
 %}
 
 /* definiciones regulares */
-numero        [0-9]
+digito        [0-9]
 letra         [a-zA-Z]
-identificador {letra}({letra}|{numero})*
+caracter	[a-zA-Z]|[0-9]
+identificador   {letra}({caracter})*(_{caracter})*({caracter})*   
+numero		{digito}+(\.{digito}+)?(E[+\-]?{digito}+)?
+cadena          \'(.)*\'
 
 _mod  			(?i:_mod)
 _div  			(?i:_div)
@@ -81,6 +84,12 @@ fin_para 		(?i:fin_para)
                     yylval.sym = s;
                     return s->tipo == INDEFINIDA ? VAR : s->tipo;}
 
+":="                    {return ASIGNACION;}
+"+"                     {return SUMA;}
+"-"                     {return RESTA;}
+"*"                     {return PROD;}
+"/"                     {return DIV;}
+
 ">="	{return MAYOR_IGUAL;}
 "<="	{return MENOR_IGUAL;}
 "=="	{return IGUAL;}
@@ -88,8 +97,10 @@ fin_para 		(?i:fin_para)
 ">"		{return MAYOR_QUE;}
 "<"		{return MENOR_QUE;}
 ":="    {return ASIGNACION;}
-
 "/"		{return DIV;}
+"**"	{return POTENCIA;}
+"||"	{return CONCAT;}
+
 
 
 
