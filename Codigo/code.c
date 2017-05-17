@@ -483,6 +483,19 @@ void distinto()
  push(d1);    /* Apilar resultado */
 }
 
+void borrar() {
+  BORRAR;
+}
+
+void lugar() {
+  Datum d1, d2;
+
+  d2 = pop();
+  d1 = pop();
+
+  LUGAR((int)d1.val, (int)d2.val);
+}
+
 
 void y_logico()
 {

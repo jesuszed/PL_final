@@ -18,11 +18,14 @@ _div  			(?i:_div)
 _o 				(?i:_o)
 _y				(?i:_y)
 _no				(?i:_no)
+_borrar			(?i:_borrar)
+_lugar 			(?i:_lugar)
 leer 			(?i:leer)
 leer_cadena 	(?i:leer_cadena)
 escribir 		(?i:escribir)
 escribir_cadena	(?i:escribir_cadena)
 si 				(?i:si)
+
 entonces		(?i:entonces)
 si_no			(?i:si_no)
 fin_si			(?i:fin_si)
@@ -46,23 +49,25 @@ fin_para 		(?i:fin_para)
 				   						yylval.sym=install("",NUMBER,d); 
 				   						return NUMBER;}
 
-{_mod}		{return MOD;}
-{_div}		{return DIV_ENT;}
-{_o}		{return O_LOGICO;}
-{_y}		{return Y_LOGICO;}
-{_no}		{return NO_LOGICO;}
-{leer}		{return LEER;}
-{leer_cadena}	{return LEER_CADENA;}
-{escribir}	{return ESCRIBIR;}
+{_mod}				{return MOD;}
+{_div}				{return DIV_ENT;}
+{_o}				{return O_LOGICO;}
+{_y}				{return Y_LOGICO;}
+{_no}				{return NO_LOGICO;}
+{_borrar}			{return BORRAR;}
+{_lugar} 			{return LUGAR;}
+{leer}				{return LEER;}
+{leer_cadena}		{return LEER_CADENA;}
+{escribir}			{return ESCRIBIR;}
 {escribir_cadena}	{return ESCRIBIR_CADENA;}
-{si}	{return SI;}
-{entonces}	{return ENTONCES;}
-{si_no}		{return SI_NO;}
-{fin_si}	{return FIN_SI;}
-{mientras}	{return MIENTRAS;}
-{hacer}	{return HACER;}
-{fin_mientras}	{return FIN_MIENTRAS;}
-{repetir}	{return REPETIR}
+{si}				{return SI;}
+{entonces}			{return ENTONCES;}
+{si_no}				{return SI_NO;}
+{fin_si}			{return FIN_SI;}
+{mientras}			{return MIENTRAS;}
+{hacer}				{return HACER;}
+{fin_mientras}		{return FIN_MIENTRAS;}
+{repetir}			{return REPETIR;}
 
 {identificador} { Symbol *s;
 					int i=0;

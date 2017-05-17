@@ -17,7 +17,7 @@
 }
 
 /* Definiciones regulares */
-%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR PARA DESDE HASTA PASO FIN_PARA
+%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR PARA DESDE HASTA PASO FIN_PARA _BORRAR _LUGAR
 
 %type <inst> stmt asgn expr stmtlist cond while if end para
 
@@ -39,20 +39,21 @@ list :    /* nada: epsilon produccion */
 
 stmt :    /* nada: epsilon produccion */  {$$=progp;}
         | asgn          {code(pop2);}
-	   | PRINT expr    {code(escribir); $$ = $2;}
-        | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
+	    | PRINT expr    {code(escribir); $$ = $2;}
+        | _BORRAR       {code(borrar);}
+        | _LUGAR '(' expr ',' expr ')' {code(lugar); $$ = $3; $$ = $5;}        | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
         | LEER_CADENA '(' VAR ')' {code2(leercadena,(Inst)$3);}
         | ESCRIBIR '(' expr ')'    {code(escribir); $$ = $3;}
         | ESCRIBIR_CADENA '(' expr ')'   {code(escribircadena); $$ = $3;}
         | mientras cond HACER stmtlist FIN_MIENTRAS end  
                   {
-                   ($1)[1]=(Inst)$3; /* cuerpo del bucle */
-                   ($1)[2]=(Inst)$4; /* siguiente instruccion al bucle */
+                   ($1)[1]=(Inst)$4; /* cuerpo del bucle */
+                   ($1)[2]=(Inst)$6; /* siguiente instruccion al bucle */
                   }
         | si cond ENTONCES end /* proposicion if sin parte else */
                   {
-                   ($1)[1]=(Inst)$3; /* cuerpo del if */
-                   ($1)[3]=(Inst)$4; /* siguiente instruccion al if */
+                   ($1)[1]=(Inst)$4; /* cuerpo del if */
+                   ($1)[3]=(Inst)$6; /* siguiente instruccion al if */
                   }
         | si cond ENTONCES end SI_NO stmt end /* proposicion if con parte else */
                   {

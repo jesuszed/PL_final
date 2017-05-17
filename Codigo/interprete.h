@@ -117,6 +117,8 @@ void leercadena();
 void escribir();
 void escribir_cadena();
 
+void borrar();
+void lugar();
 
 
 #endif
