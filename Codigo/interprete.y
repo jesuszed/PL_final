@@ -17,9 +17,9 @@
 }
 
 /* Definiciones regulares */
-%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR PARA DESDE HASTA PASO FIN_PARA _BORRAR _LUGAR
+%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO FIN_SI LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR PARA DESDE HASTA PASO FIN_PARA _BORRAR _LUGAR CADENA
 
-%type <inst> stmt asgn expr stmtlist cond while if end para
+%type <inst> stmt asgn expr stmtlist cond mientras si end para variable
 
 %right ASIGNACION
 %left O_LOGICO
@@ -28,7 +28,7 @@
 %left MAYOR_QUE MENOR_QUE MENOR_IGUAL MAYOR_IGUAL DISTINTO IGUAL
 %left SUMA RESTA
 %left PROD MOD DIV DIV_ENT
-%left UNARIO _NO
+%left UNARIO 
 %right POTENCIA
 %left CONCAT
 %%
@@ -40,7 +40,6 @@ list :    /* nada: epsilon produccion */
 
 stmt :    /* nada: epsilon produccion */  {$$=progp;}
         | asgn          {code(pop2);}
-	    | PRINT expr    {code(escribir); $$ = $2;}
         | _BORRAR       {code(borrar);}
         | _LUGAR '(' expr ',' expr ')' {code(lugar); $$ = $3; $$ = $5;}        | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
         | LEER_CADENA '(' VAR ')' {code2(leercadena,(Inst)$3);}
@@ -51,26 +50,26 @@ stmt :    /* nada: epsilon produccion */  {$$=progp;}
                    ($1)[1]=(Inst)$4; /* cuerpo del bucle */
                    ($1)[2]=(Inst)$6; /* siguiente instruccion al bucle */
                   }
-        | si cond ENTONCES end /* proposicion if sin parte else */
+        | si cond ENTONCES stmtlist FIN_SI end /* proposicion if sin parte else */
                   {
                    ($1)[1]=(Inst)$4; /* cuerpo del if */
                    ($1)[3]=(Inst)$6; /* siguiente instruccion al if */
                   }
-        | si cond ENTONCES end SI_NO stmt end /* proposicion if con parte else */
+        | si cond ENTONCES stmtlist end SI_NO stmtlist FIN_SI end /* proposicion if con parte else */
                   {
-                   ($1)[1]=(Inst)$3; /* cuerpo del if */
-                   ($1)[2]=(Inst)$6; /* cuerpo del else */
-                   ($1)[3]=(Inst)$7; /* siguiente instruccion al if-else */
+                   ($1)[1]=(Inst)$4; /* cuerpo del if */
+                   ($1)[2]=(Inst)$7; /* cuerpo del else */
+                   ($1)[3]=(Inst)$9; /* siguiente instruccion al if-else */
                   }
         | '{' stmtlist '}'  {$$ = $2;}
 
-        | para variable DESDE expr end HASTA expr end PASO expr end HACER stmlist FIN_PARA  end
+        | para variable DESDE expr end HASTA expr end PASO expr end HACER stmtlist FIN_PARA  end
         {
-            ($1)[1] = (Inst) ; /* Desde */
-            ($1)[2] = (Inst) ; /* hasta */
-            ($1)[3] = (Inst) ; /* paso */
-            ($1)[4] = (Inst) ; /* cuerpo for */
-            ($1)[5] = (Inst) ; /* Siguiente instruccion a for */
+            ($1)[1] = (Inst)$4; /* Desde */
+            ($1)[2] = (Inst)$7; /* hasta */
+            ($1)[3] = (Inst)$10; /* paso */
+            ($1)[4] = (Inst)$13; /* cuerpo for */
+            ($1)[5] = (Inst)$15; /* Siguiente instruccion a for */
 
 
         }

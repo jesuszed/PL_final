@@ -27,9 +27,11 @@ void init();
 typedef struct Symbol { /* entrada en la tabla de simbolos */
 	               char *nombre;
 	               short tipo;  /* VAR, FUNCION, INDEFINIDA */ 
+	               short subtipo; /* NUMEROS, CADENA */
 	               union {
-		              double val;        /* si es VAR */
-		              double (*ptr)();   /* si es FUNCION */
+		              	double val;        /* si es VAR */
+		              	double (*ptr)();   /* si es FUNCION */
+	               		char *cad;
 		             } u;
                        struct Symbol * siguiente;
 	              } Symbol;
@@ -42,8 +44,11 @@ Symbol *install(char *s, int t, double);
 Symbol *lookup(char *s);
 
 typedef union Datum { /* tipo de la pila del interprete */ 
-                     double val;
-                     Symbol *sym;
+						short tipo;
+						short subtipo;
+                     	double val;
+                     	char *cad;
+                     	Symbol *sym;
                     } Datum;
 
 
@@ -79,6 +84,7 @@ extern void constpush();
 void dividir();
 void dividir_entero();
 void escribir();
+void escribircadena();
 void eval();
 
 
@@ -99,7 +105,7 @@ void varpush();
 
 void ifcode();
 void whilecode();
-//void repetircode();
+void repetircode();
 void paracode();
 void concatenacion();
 
@@ -110,9 +116,9 @@ void mayor_igual();
 void menor_igual();
 void igual(); 
 void distinto();
-void y_logic();
-void o_logic();
-void no_logic();
+void y_logico();
+void o_logico();
+void no_logico();
 
 void leervariable();
 void leercadena();

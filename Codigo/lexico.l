@@ -9,11 +9,11 @@ extern int lineno;
 %}
 
 /* definiciones regulares */
-digito        [0-9]
-letra         [a-zA-Z]
-caracter	[a-zA-Z]|[0-9]
+digito        	[0-9]
+letra         	[a-zA-Z]
+caracter		[a-zA-Z]|[0-9]
 identificador   {letra}({caracter})*(_{caracter})*({caracter})*   
-numero		{digito}+(\.{digito}+)?(E[+\-]?{digito}+)?
+numero			{digito}+(\.{digito}+)?(E[+\-]?{digito}+)?
 cadena          \'(.)*\'
 
 _mod  			(?i:_mod)
@@ -27,14 +27,16 @@ leer 			(?i:leer)
 leer_cadena 	(?i:leer_cadena)
 escribir 		(?i:escribir)
 escribir_cadena	(?i:escribir_cadena)
-si 				(?i:si)
 
+si 				(?i:si)
 entonces		(?i:entonces)
 si_no			(?i:si_no)
 fin_si			(?i:fin_si)
+
 mientras 		(?i:mientras)
 hacer 			(?i:hacer)
 fin_mientras	(?i:fin_mientras)
+
 repetir			(?i:repetir)
 
 para 			(?i:para)
@@ -57,8 +59,8 @@ fin_para 		(?i:fin_para)
 {_o}				{return O_LOGICO;}
 {_y}				{return Y_LOGICO;}
 {_no}				{return NO_LOGICO;}
-{_borrar}			{return BORRAR;}
-{_lugar} 			{return LUGAR;}
+{_borrar}			{return _BORRAR;}
+{_lugar} 			{return _LUGAR;}
 {leer}				{return LEER;}
 {leer_cadena}		{return LEER_CADENA;}
 {escribir}			{return ESCRIBIR;}
@@ -89,17 +91,14 @@ fin_para 		(?i:fin_para)
 "-"                     {return RESTA;}
 "*"                     {return PROD;}
 "/"                     {return DIV;}
-
-">="	{return MAYOR_IGUAL;}
-"<="	{return MENOR_IGUAL;}
-"=="	{return IGUAL;}
-"!="	{return DISTINTO;}
-">"		{return MAYOR_QUE;}
-"<"		{return MENOR_QUE;}
-":="    {return ASIGNACION;}
-"/"		{return DIV;}
-"**"	{return POTENCIA;}
-"||"	{return CONCAT;}
+">="					{return MAYOR_IGUAL;}
+"<="					{return MENOR_IGUAL;}
+"=="					{return IGUAL;}
+"!="					{return DISTINTO;}
+">"						{return MAYOR_QUE;}
+"<"						{return MENOR_QUE;}
+"**"					{return POTENCIA;}
+"||"					{return CONCAT;}
 
 
 
@@ -107,7 +106,7 @@ fin_para 		(?i:fin_para)
 
 
 ^#       { 
-	  CLEAR_SCREEN; 
+	  BORRAR; 
 	  LUGAR(10,10);
 	  IYELLOW;
 	  printf(">>>>>>> Fin del programa <<<<<<<\n");

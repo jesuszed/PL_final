@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include  <math.h>
+#include <string.h>
 
 #include "interprete.h"
 #include "interprete.tab.h"
@@ -140,14 +141,7 @@ void dividir_entero()
   push(d1);
 }
 
-void escribir() /* sacar de la pila el valor superior y escribirlo */
-{
- Datum d;
- 
- d=pop();  /* Obtener numero */
- 
- printf("\t ---> %.8g\n",d.val);
-}
+
 
 void eval() /* evaluar una variable en la pila */
 {
@@ -332,7 +326,6 @@ void leercadena() /* Leer una variable numerica por teclado */
  Symbol *variable;
 
  char c[1000];
- char n;
  int i=0, j=0;
 
  variable = (Symbol *)(*pc); 
@@ -372,7 +365,7 @@ void leercadena() /* Leer una variable numerica por teclado */
         else
           c[j]='\0';
     variable->u.val=0.0;
-    strcpy(variable->u.chain, c);
+    strcpy(variable->u.cad, c);
     variable->tipo=VAR;
     variable->subtipo=CADENA;
     
@@ -399,7 +392,7 @@ void escribircadena() /*escribir cadena sacada de la pila*/
  
  d=pop();
  if(d.subtipo== CADENA)
-   printf("\t ---> %s\n",d.chain);
+   printf("\t ---> %s\n",d.cad);
  else
   execerror("No es una cadena", NULL);
 
@@ -604,7 +597,7 @@ void concatenacion(){
 
 
  if(d1.subtipo == CADENA && d2.subtipo == CADENA)
-   strcat(d1.chain, d2.chain);   /* Concatenar*/
+   strcat(d1.cad, d2.cad);   /* Concatenar*/
  else{
   if(d1.subtipo == NUMBER && d2.subtipo == NUMBER)
    execerror("Son numeros", NULL);
@@ -660,6 +653,12 @@ void paracode()
   hasta = pop();
   execute(*((Inst **)(savepc+2)));
   paso = pop();
+
+  if (paso.val == 0 ||
+     (paso.val > 0) && (desde.val > hasta.val) ||
+     (paso.val < 0) && (desde.val < hasta.val)) {
+    execerror (" Bucle infinito ", (char *) 0);
+  }
 
   for(variable->u.val=desde.val; variable->u.val <= hasta.val; (variable->u.val)=(variable->u.val+paso.val) )
   {
