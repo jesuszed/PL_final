@@ -33,10 +33,6 @@ static struct
 					{"si_no",			SI_NO},
 					{"mientras",		MIENTRAS},					
 					{"fin_si",			FIN_SI},
-					{"leer",			LEER},
-					{"leer_cadena",		LEER_CADENA},
-					{"escribir",		ESCRIBIR},
-					{"escribir_cadena",	ESCRIBIR_CADENA},
 					{"entonces",		ENTONCES},
 					{"hacer",			HACER},
 					{"repetir",			REPETIR},
@@ -45,7 +41,7 @@ static struct
 					{"hasta",			HASTA},
 					{"paso",			PASO},
 					{"fin_para",		FIN_PARA},
-					{0,					0},
+					{0,					0}
 				};
 
 static struct 

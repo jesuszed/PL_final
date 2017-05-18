@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_INTERPRETE_TAB_H_INCLUDED
-# define YY_YY_INTERPRETE_TAB_H_INCLUDED
+#ifndef YY_YY_IPE_TAB_H_INCLUDED
+# define YY_YY_IPE_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -48,49 +48,52 @@ extern int yydebug;
     NUMBER = 258,
     VAR = 259,
     CONSTANTE = 260,
-    FUNCION0_PREDEFINIDA = 261,
-    FUNCION1_PREDEFINIDA = 262,
-    FUNCION2_PREDEFINIDA = 263,
-    INDEFINIDA = 264,
-    MIENTRAS = 265,
-    SI = 266,
-    ENTONCES = 267,
-    SI_NO = 268,
-    FIN_SI = 269,
-    LEER = 270,
-    LEER_CADENA = 271,
-    ESCRIBIR = 272,
-    ESCRIBIR_CADENA = 273,
-    HACER = 274,
-    FIN_MIENTRAS = 275,
-    REPETIR = 276,
-    PARA = 277,
-    DESDE = 278,
-    HASTA = 279,
-    PASO = 280,
-    FIN_PARA = 281,
-    _BORRAR = 282,
-    _LUGAR = 283,
-    CADENA = 284,
-    ASIGNACION = 285,
-    O_LOGICO = 286,
-    Y_LOGICO = 287,
-    NO_LOGICO = 288,
-    MAYOR_QUE = 289,
-    MENOR_QUE = 290,
-    MENOR_IGUAL = 291,
-    MAYOR_IGUAL = 292,
-    DISTINTO = 293,
-    IGUAL = 294,
-    SUMA = 295,
-    RESTA = 296,
-    PROD = 297,
-    MOD = 298,
-    DIV = 299,
-    DIV_ENT = 300,
-    UNARIO = 301,
-    POTENCIA = 302,
-    CONCAT = 303
+    CADENA = 261,
+    FUNCION0_PREDEFINIDA = 262,
+    FUNCION1_PREDEFINIDA = 263,
+    FUNCION2_PREDEFINIDA = 264,
+    INDEFINIDA = 265,
+    ESCRIBIR = 266,
+    ESCRIBIR_CADENA = 267,
+    MIENTRAS = 268,
+    SI = 269,
+    ENTONCES = 270,
+    SI_NO = 271,
+    FIN_SI = 272,
+    LEER = 273,
+    LEER_CADENA = 274,
+    TOKEN_BORRAR = 275,
+    TOKEN_LUGAR = 276,
+    INICIO = 277,
+    FIN = 278,
+    HACER = 279,
+    FIN_MIENTRAS = 280,
+    REPETIR = 281,
+    HASTA_QUE = 282,
+    PARA = 283,
+    DESDE = 284,
+    HASTA = 285,
+    PASO = 286,
+    FIN_PARA = 287,
+    ASIGNACION = 288,
+    O_LOGICO = 289,
+    Y_LOGICO = 290,
+    MAYOR_QUE = 291,
+    MENOR_QUE = 292,
+    MENOR_IGUAL = 293,
+    MAYOR_IGUAL = 294,
+    DISTINTO = 295,
+    IGUAL = 296,
+    SUMA = 297,
+    RESTA = 298,
+    PROD = 299,
+    DIV = 300,
+    DIV_INT = 301,
+    MOD = 302,
+    UNARIO = 303,
+    NO_LOGICO = 304,
+    POT = 305,
+    CONCAT = 306
   };
 #endif
 
@@ -99,12 +102,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 14 "interprete.y" /* yacc.c:1909  */
+#line 14 "ipe.y" /* yacc.c:1909  */
              
        Symbol *sym;    /* puntero a la tabla de simbolos */
        Inst *inst;     /* instruccion de maquina */
 
-#line 108 "interprete.tab.h" /* yacc.c:1909  */
+#line 111 "ipe.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -115,4 +118,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_INTERPRETE_TAB_H_INCLUDED  */
+#endif /* !YY_YY_IPE_TAB_H_INCLUDED  */

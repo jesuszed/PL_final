@@ -46,7 +46,7 @@ stmt :    /* nada: epsilon produccion */  {$$=progp;}
         | TOKEN_LUGAR '(' expr ',' expr ')' {$$=$3;code(lugar);}
         | ESCRIBIR '(' expr ')'    {code(escribir); $$ = $3;}
         | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
-        | ESCRIBIR_CADENA '(' expr ')'   {csode(escribircadena); $$ = $3;}
+        | ESCRIBIR_CADENA '(' expr ')'   {code(escribircadena); $$ = $3;}
         | LEER_CADENA '('  VAR  ')'    {code2(leercadena,(Inst)$3);}
         | mientras cond HACER stmtlist FIN_MIENTRAS end 
                   {

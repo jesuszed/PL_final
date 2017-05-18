@@ -1,8 +1,3 @@
-/*!
-	\file ejemplo9.h 
-	\brief Prototipos de funciones auxiliares
-*/
-
 #ifndef INTERPRETE_H
 #define INTERPRETE_H
 
@@ -38,10 +33,11 @@ typedef struct Symbol { /* entrada en la tabla de simbolos */
 
 
 /* Instala en la tabla de símbolos */
-Symbol *install(char *s, int t, double);
-
+/* Symbol *install(char *s, int t, double); */
+Symbol *install(), *lookup(), *installcadena();
+char *emalloc(unsigned n);
 /* Busca en la tabla de símbolos */
-Symbol *lookup(char *s);
+/* Symbol *lookup(char *s); */
 
 typedef union Datum { /* tipo de la pila del interprete */ 
 						short tipo;
@@ -81,6 +77,7 @@ void execute(Inst *p);
 /* Prototipos de funciones auxiliares */
 extern void assign();
 extern void constpush();
+extern void cadenapush();
 void dividir();
 void dividir_entero();
 void escribir();

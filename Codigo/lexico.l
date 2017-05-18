@@ -9,12 +9,9 @@ extern int lineno;
 %}
 
 /* definiciones regulares */
-digito        	[0-9]
-letra         	[a-zA-Z]
-caracter		[a-zA-Z]|[0-9]
-identificador   {letra}({caracter})*(_{caracter})*({caracter})*   
-numero			{digito}+(\.{digito}+)?(E[+\-]?{digito}+)?
-cadena          \'(.)*\'
+numero          [0-9]
+letra           [a-zA-Z]
+identificador   {letra}(_?({letra}|{numero}))*
 
 _mod  			(?i:_mod)
 _div  			(?i:_div)
@@ -27,18 +24,14 @@ leer 			(?i:leer)
 leer_cadena 	(?i:leer_cadena)
 escribir 		(?i:escribir)
 escribir_cadena	(?i:escribir_cadena)
-
 si 				(?i:si)
 entonces		(?i:entonces)
 si_no			(?i:si_no)
 fin_si			(?i:fin_si)
-
 mientras 		(?i:mientras)
 hacer 			(?i:hacer)
 fin_mientras	(?i:fin_mientras)
-
 repetir			(?i:repetir)
-
 para 			(?i:para)
 desde 			(?i:desde)
 hasta 			(?i:hasta)
@@ -46,7 +39,7 @@ paso 			(?i:paso)
 fin_para 		(?i:fin_para)
 
 %%
-[\t] { ; } /* saltar los espacios y los tabuladores */
+[ \t] { ; } /* saltar los espacios y los tabuladores */
 
 {numero}+\.?|{numero}*\.{numero}+ {	double d;  
                                    		sscanf(yytext,"%lf",&d);
@@ -63,8 +56,7 @@ fin_para 		(?i:fin_para)
 {_lugar} 			{return _LUGAR;}
 {leer}				{return LEER;}
 {leer_cadena}		{return LEER_CADENA;}
-{escribir}			{return ESCRIBIR;}
-{escribir_cadena}	{return ESCRIBIR_CADENA;}
+{escribir_cadena}   {return ESCRIBIR_CADENA;}
 {si}				{return SI;}
 {entonces}			{return ENTONCES;}
 {si_no}				{return SI_NO;}
@@ -73,6 +65,12 @@ fin_para 		(?i:fin_para)
 {hacer}				{return HACER;}
 {fin_mientras}		{return FIN_MIENTRAS;}
 {repetir}			{return REPETIR;}
+
+{numero}+(\.{numero}+)?([eE][+-]?{numero}+)? {double d;
+                                   sscanf(yytext,"%lf",&d);
+                                 /* Instala el numero en la tabla de simbolos */
+                   yylval.sym=install("",NUMBER,d);
+                   return NUMBER;}
 
 {identificador} { Symbol *s;
 					int i=0;
