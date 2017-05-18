@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ipe.h"
-#include "ipe.tab.h"
+#include "interprete.h"
+#include "interprete.tab.h"
 
 #include "macros.h"
 
@@ -140,7 +140,7 @@ void dividir() /* dividir los dos valores superiores de la pila */
  push(d1);                    /* Apilar el resultado */
 }
 
-void dividirenteros() /* dividir los dos valores superiores de la pila */
+void dividir_entero() /* dividir los dos valores superiores de la pila */
 {
  Datum d1,d2;
 

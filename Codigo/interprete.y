@@ -17,20 +17,16 @@
 }
 
 /* Definiciones regulares */
-%token <sym> NUMBER VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA MIENTRAS SI ENTONCES SI_NO FIN_SI LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA HACER FIN_MIENTRAS REPETIR PARA DESDE HASTA PASO FIN_PARA _BORRAR _LUGAR CADENA
-
-%type <inst> stmt asgn expr stmtlist cond mientras si end para variable
-
+%token <sym> NUMBER CADENA VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA SI ENTONCES SI_NO FIN_SI MIENTRAS HACER FIN_MIENTRAS REPETIR HASTA PARA DESDE PASO FIN_PARA _BORRAR _LUGAR SUMA RESTA PROD
+%type <inst> stmt asgn expr stmtlist cond mientras si repetir para variable end
 %right ASIGNACION
-%left O_LOGICO
-%left Y_LOGICO
-%left NO_LOGICO
+%left _O
+%left _Y
 %left MAYOR_QUE MENOR_QUE MENOR_IGUAL MAYOR_IGUAL DISTINTO IGUAL
-%left SUMA RESTA
-%left PROD MOD DIV DIV_ENT
-%left UNARIO 
+%left '+' '-'
+%left '*' '/' _MOD _DIV CONCATENACION
+%left UNARIO _NO
 %right POTENCIA
-%left CONCAT
 %%
 
 list :    /* nada: epsilon produccion */ 
@@ -43,7 +39,8 @@ stmt :    /* nada: epsilon produccion */  {$$=progp;}
         | ESCRIBIR '(' expr ')'    {code(escribir); $$ = $3;}
         | ESCRIBIR_CADENA '(' expr ')'   {code(escribircadena); $$ = $3;}
         | _BORRAR       {code(borrar);}
-        | _LUGAR '(' expr ',' expr ')' {code(lugar); $$ = $3; $$ = $5;}        | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
+        | _LUGAR '(' expr ',' expr ')' {code(lugar); $$ = $3; $$ = $5;}        
+        | LEER '(' VAR ')'    {code2(leervariable,(Inst)$3);}
         | LEER_CADENA '(' VAR ')' {code2(leercadena,(Inst)$3);}
         | mientras cond HACER stmtlist FIN_MIENTRAS end  
                   {
@@ -62,6 +59,11 @@ stmt :    /* nada: epsilon produccion */  {$$=progp;}
                    ($1)[3]=(Inst)$9; /* siguiente instruccion al if-else */
                   }
 
+        | repetir stmtlist HASTA cond end
+                  {
+                    ($1)[1]=(Inst)$4; /* condicion */
+                    ($1)[2]=(Inst)$5; /* siguiente instruccion al repetir */
+                  }
         | para variable DESDE expr end HASTA expr end PASO expr end HACER stmtlist FIN_PARA  end
         {
             ($1)[1] = (Inst)$4; /* Desde */
@@ -92,11 +94,14 @@ mientras:    MIENTRAS      {$$= code3(whilecode,STOP,STOP);}
 si:       SI         {$$= code(ifcode); code3(STOP,STOP,STOP);}
         ;
 
-end :    /* nada: produccion epsilon */  {code(STOP); $$ = progp;}
+
+repetir:       REPETIR         {$$=code3(repetircode,STOP,STOP);}
         ;
 
 para: PARA {$$ = code3(paracode, STOP, STOP); code3(STOP, STOP, STOP);}
 
+end :    /* nada: produccion epsilon */  {code(STOP); $$ = progp;}
+        ;
 stmtlist:  /* nada: prodcuccion epsilon */ {$$=progp;}
         | stmtlist stmt ';'
         ;
@@ -110,27 +115,26 @@ expr :    NUMBER     		{$$=code2(constpush,(Inst)$1);}
         | FUNCION1_PREDEFINIDA '(' expr ')' {$$=$3;code2(funcion1,(Inst)$1->u.ptr);}
         | FUNCION2_PREDEFINIDA '(' expr ',' expr ')'
                                             {$$=$3;code2(funcion2,(Inst)$1->u.ptr);}
-        | '(' expr ')'  	{$$ = $2;}
-        | expr SUMA expr 	{code(sumar);}
-        | expr RESTA expr 	{code(restar);}
-        | expr PROD expr 	{code(multiplicar);}
-        | expr DIV expr 	{code(dividir);}
-        | expr DIV_ENT expr {code(dividir_entero);}
-        | expr MOD expr 	{code(modulo);}
-        | expr POTENCIA expr 	{code(potencia);}
-        |'-' expr %prec UNARIO 	{$$=$2; code(negativo);}
-        |'+' expr %prec UNARIO 	{$$=$2; code(positivo);}
-        | expr MAYOR_QUE expr 	{code(mayor_que);}
+         | '(' expr ')'   {$$ = $2;}
+        | expr SUMA expr   {code(sumar);}
+        | expr RESTA expr   {code(restar);}
+        | expr PROD expr   {code(multiplicar);}
+        | expr '/' expr   {code(dividir);}
+        | expr _DIV expr  {code(dividir_entero);}
+        | expr _MOD expr  {code(modulo);}
+        | expr POTENCIA expr  {code(potencia);}
+        | expr CONCATENACION expr   {code(concatenacion);}
+        |RESTA expr %prec UNARIO  {$$=$2; code(negativo);}
+        |SUMA expr %prec UNARIO  {$$=$2; code(positivo);}
+        | expr MAYOR_QUE expr   {code(mayor_que);}
         | expr MAYOR_IGUAL expr {code(mayor_igual);}
-        | expr MENOR_QUE expr 	{code(menor_que);}
+        | expr MENOR_QUE expr   {code(menor_que);}
         | expr MENOR_IGUAL expr {code(menor_igual);}
-        | expr IGUAL expr 	{code(igual);}
-        | expr DISTINTO expr 	{code(distinto);}
-        | expr O_LOGICO expr {code(o_logico);}
-        | expr Y_LOGICO expr {code(y_logico);}
-        | expr NO_LOGICO expr {code(no_logico);}
-        | expr CONCAT expr {code(concatenacion);}
-
+        | expr IGUAL expr   {code(igual);}
+        | expr DISTINTO expr  {code(distinto);}
+        | expr _Y expr  {code(y_logico);}
+        | expr _O expr  {code(o_logico);}
+        | _NO expr  {$$=$2; code(negativo);}
       	;
 
 %%

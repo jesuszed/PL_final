@@ -115,15 +115,19 @@ void constpush()  /* meter una constante en la pila */
 void dividir() /* dividir los dos valores superiores de la pila */
 {
  Datum d1,d2;
- 
+
  d2=pop();      /* Obtener el primer numero  */
  d1=pop();      /* Obtener el segundo numero */
- 
-/* Comprobar si hay division por 0 */ 
- 
+
+/* Comprobar si hay division por 0 */
+
  if (d2.val == 0.0)
      execerror (" Division por cero ", (char *) 0);
- 
+
+  if (d1.subtipo == CADENA || d2.subtipo == CADENA ) {
+    execerror (" Division de cadenas ", (char *) 0);
+  }
+
  d1.val = d1.val / d2.val;    /* Dividir             */
  push(d1);                    /* Apilar el resultado */
 }
@@ -134,12 +138,21 @@ void dividir_entero()
   d2 = pop();
   d1 = pop();
 
-  if(d2.val == 0.0)
-    execerror (" Division por cero ", (char *) 0);
 
-  d1.val = d1.val / d2.val;
-  d1.val = (int)d1.val;
-  push(d1);
+ if (d1.subtipo == CADENA || d2.subtipo == CADENA ) {
+   execerror (" Division de cadenas ", (char *) 0);
+ }
+
+/* Comprobar si hay division por 0 */
+
+  d1.val = (int) d1.val;
+  d2.val = (int) d2.val;
+
+ if (d2.val == 0)
+     execerror (" Division por cero ", (char *) 0);
+
+ d1.val = (int) d1.val / (int) d2.val;    /* Dividir             */
+ push(d1);                    /* Apilar el resultado */
 }
 
 
@@ -147,15 +160,21 @@ void dividir_entero()
 void eval() /* evaluar una variable en la pila */
 {
  Datum d;
- 
+
  d=pop();  /* Obtener variable de la pila */
- 
-/* Si la variable no esta definida */ 
- if (d.sym->tipo == INDEFINIDA) 
+
+/* Si la variable no esta definida */
+ if (d.sym->tipo == INDEFINIDA)
      execerror (" Variable no definida ", d.sym->nombre);
- 
- d.val=d.sym->u.val;  /* Sustituir variable por valor */
+
+ if (d.sym->subtipo == NUMBER) {
+   d.val=d.sym->u.val;  /* Sustituir variable por valor */
+ } else if (d.sym->subtipo == CADENA) {
+   d.cad = emalloc (strlen(d.sym->u.cad)*sizeof(char));
+   strcpy(d.cad, d.sym->u.cad);   /* Sustituir variable por valor */
+ }
  push(d);             /* Apilar valor */
+
 }
 
 void funcion0() /* evaluar una funcion predefinida sin parametros */
@@ -352,10 +371,12 @@ void escribir() /* escribir el valor sacado de la pila */
  Datum d;
 
  d=pop();  /* Obtener numero */
-  if(d.subtipo==NUMBER)
-   printf("\t ---> %.8g\n",d.val);
- else
-    execerror("No es un dato numerico", NULL);
+
+ if (d.subtipo != NUMBER) {
+   execerror (" Impresión de cadena ", (char *) 0);
+ }
+
+ printf("%.8g",d.val);
 }
 
 void escribircadena() /*escribir cadena sacada de la pila*/
@@ -620,6 +641,18 @@ void cadenapush() {
   push(d);
 }
 
+void repetircode() {
+  Datum d;
+  Inst *savepc = pc;
+
+  do {
+    execute(savepc+2);
+    execute(*((Inst **)(savepc)));
+    d=pop();
+  } while(!d.val);
+
+  pc= *((Inst **)(savepc+1));
+}
 void paracode()
 {
   Datum desde, hasta, paso;

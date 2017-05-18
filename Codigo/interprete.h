@@ -124,6 +124,7 @@ void escribir_cadena();
 
 void borrar();
 void lugar();
+void repetircode();
 
 
 #endif

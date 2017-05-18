@@ -3,9 +3,9 @@
 #include <errno.h>
 
 
-#include "ipe.h"
+#include "interprete.h"
 
-/*  Referencia a la variable global que indica los codigos
+/*  Referencia a la variable global que indica los codigos 
    de los errores generados por las funciones matematicas */
 extern int errno;
 
@@ -17,11 +17,11 @@ double errcheck(double d, char *s);
 /** Nombre: Log                                                 **/
 /** Labor que desarrolla: calcula el logaritmo neperiano de un  **/
 /**       numero real, pero comprueba antes si hay algun error  **/
-/**       en el argumento.                                      **/
+/**       en el argumento.                                      **/ 
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametro:                                                  **/
 /**  Nombre: x                                                  **/
-/**    	Tipo: real de doble precision "double"                  **/
+/**     Tipo: real de doble precision "double"                  **/
 /**     Mision: indica el numero al cual se le va aplicar       **/
 /**            la funcion logaritmo neperiano                   **/
 /*****************************************************************/
@@ -34,11 +34,11 @@ double Log(double x)
 /** Nombre: Log10                                               **/
 /** Labor que desarrolla: calcula el logaritmo decimal de un    **/
 /**       numero real, pero comprueba antes si hay algun error  **/
-/**       en el argumento.                                      **/
+/**       en el argumento.                                      **/ 
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametro:                                                  **/
 /**  Nombre: x                                                  **/
-/**    	Tipo: real de doble precision "double"                  **/
+/**     Tipo: real de doble precision "double"                  **/
 /**     Mision: indica el numero al cual se le va aplicar       **/
 /**            la funcion logaritmo decimal                     **/
 /*****************************************************************/
@@ -51,11 +51,11 @@ double Log10(double x)
 /** Nombre: Exp                                                 **/
 /** Labor que desarrolla: calcula la exponencial de un numero   **/
 /**       real, pero comprueba antes si hay algun error en el   **/
-/**       argumento.                                            **/
+/**       argumento.                                            **/ 
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametro:                                                  **/
 /**  Nombre: x                                                  **/
-/**    	Tipo: real de doble precision "double"                  **/
+/**     Tipo: real de doble precision "double"                  **/
 /**     Mision: indica el numero al cual se le va aplicar       **/
 /**            la funcion exponencial                           **/
 /*****************************************************************/
@@ -68,11 +68,11 @@ double Exp(double x)
 /** Nombre: Sqrt                                                **/
 /** Labor que desarrolla: calcula la raiz cuadrada de un numero **/
 /**       real, pero comprueba antes si hay algun error en el   **/
-/**       argumento.                                            **/
+/**       argumento.                                            **/ 
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametro:                                                  **/
 /**  Nombre: x                                                  **/
-/**    	Tipo: real de doble precision "double"                  **/
+/**     Tipo: real de doble precision "double"                  **/
 /**     Mision: indica el numero al cual se le va aplicar       **/
 /**            la funcion raiz cuadrada.                        **/
 /*****************************************************************/
@@ -85,11 +85,11 @@ double Sqrt(double x)
 /** Nombre: integer                                             **/
 /** Labor que desarrolla: calcula la parte entera de un numero  **/
 /**       real, pero comprueba antes si hay algun error en el   **/
-/**       argumento.                                            **/
+/**       argumento.                                            **/ 
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametro:                                                  **/
 /**  Nombre: x                                                  **/
-/**    	Tipo: real de doble precision "double"                  **/
+/**     Tipo: real de doble precision "double"                  **/
 /**     Mision: indica el numero al cual se le va aplicar       **/
 /**            calcular la parte entera.                        **/
 /*****************************************************************/
@@ -101,7 +101,7 @@ double integer(double x)
 
 /*****************************************************************/
 /** Nombre: Azar                                                **/
-/** Labor que desarrolla: calcula un numero aleatorio           **/
+/** Labor que desarrolla: calcula un numero aleatorio           **/ 
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametros:   ninguno                                       **/
 /*****************************************************************/
@@ -113,14 +113,14 @@ double Azar()
 /*******************************************************************/
 /** Nombre: Atan2                                                 **/
 /** Labor que desarrolla: calcula el arco tangente doble, pero    **/
-/**       comprueba antes si hay algun error en los argumentos    **/
+/**       comprueba antes si hay algun error en los argumentos    **/ 
 /** Tipo de resultado: real de doble precision "double"           **/
 /** Parametro:                                                    **/
 /**  Nombre: x                                                    **/
-/**    	Tipo: real de doble precision "double"                    **/
+/**     Tipo: real de doble precision "double"                    **/
 /**     Mision: indica el numerador de la funcion Arco tangente   **/
 /**  Nombre: y                                                    **/
-/**    	Tipo: real de doble precision "double"                    **/
+/**     Tipo: real de doble precision "double"                    **/
 /**     Mision: indica el denominador de la funcion Arco tangente **/
 /*******************************************************************/
 
@@ -135,16 +135,16 @@ double Atan2(double x, double y)
 /** Labor que desarrolla: comprueba si se ha producido un error **/
 /**       al realizar la evaluacion matematica del primer       **/
 /**       parametro. Si no hay error, entonces devuelve el      **/
-/**       primer parametro; en caso contrario muestra el error  **/
+/**       primer parametro; en caso contrario muestra el error  **/ 
 /**       producido.                                            **/
 /** Tipo de resultado: real de doble precision "double"         **/
 /** Parametro:                                                  **/
 /**  Nombre: d                                                  **/
-/**    	Tipo: real de doble precision "double"                  **/
+/**     Tipo: real de doble precision "double"                  **/
 /**     Mision: almacenar el valor obtenido al aplicar una      **/
 /**            funcion matematica                               **/
 /**  Nombre: s                                                  **/
-/**    	Tipo: cadena de caracteres o puntero a caracter "char *"**/
+/**     Tipo: cadena de caracteres o puntero a caracter "char *"**/
 /**     Mision: indica el nombre de la funcion que se ha        **/
 /**       utilizado para calcular el valor del primer parametro.**/
 /*****************************************************************/

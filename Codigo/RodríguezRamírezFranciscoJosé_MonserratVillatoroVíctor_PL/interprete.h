@@ -61,45 +61,38 @@ extern void assign();
 extern void constpush();
 extern void cadenapush();
 void dividir();
-void dividirenteros();
+void dividir_entero();
 void escribir();
 void escribircadena();
 void eval();
-
 void funcion();
 void funcion0();
 void funcion1();
 void funcion2();
-
-
 void modulo();
 void multiplicar();
 void negativo();
 void positivo();
-void potencia();
 void restar();
+void potencia();
 void sumar();
+void paracode();
 void concatenacion();
 void varpush();
-
 void ifcode();
 void whilecode();
 void repetircode();
-void paracode();
-
 void mayor_que();
-void menor_que();
+void leercadena();
 void mayor_igual();
 void menor_igual();
 void igual();
+void menor_que();
 void distinto();
 void y_logico();
 void o_logico();
 void negacion();
-
 void leervariable();
-void leercadena();
-
 void borrar();
 void lugar();
 

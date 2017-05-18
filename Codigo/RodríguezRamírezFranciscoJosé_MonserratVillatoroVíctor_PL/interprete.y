@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "ipe.h"
+#include "interprete.h"
 
 #include "macros.h"
 
@@ -14,8 +14,8 @@
        Symbol *sym;    /* puntero a la tabla de simbolos */
        Inst *inst;     /* instruccion de maquina */
 }
-
-%token <sym> NUMBER CADENA VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA SI ENTONCES SI_NO FIN_SI MIENTRAS HACER FIN_MIENTRAS REPETIR HASTA PARA DESDE PASO FIN_PARA _BORRAR _LUGAR
+/* Definiciones regulares */
+%token <sym> NUMBER CADENA VAR CONSTANTE FUNCION0_PREDEFINIDA FUNCION1_PREDEFINIDA FUNCION2_PREDEFINIDA INDEFINIDA LEER LEER_CADENA ESCRIBIR ESCRIBIR_CADENA SI ENTONCES SI_NO FIN_SI MIENTRAS HACER FIN_MIENTRAS REPETIR HASTA PARA DESDE PASO FIN_PARA _BORRAR _LUGAR SUMA RESTA PROD
 %type <inst> stmt asgn expr stmtlist cond mientras si repetir para variable end
 %right ASIGNACION
 %left _O
@@ -116,7 +116,7 @@ expr :    NUMBER     		{$$=code2(constpush,(Inst)$1);}
         | expr '-' expr 	{code(restar);}
         | expr '*' expr 	{code(multiplicar);}
         | expr '/' expr 	{code(dividir);}
-        | expr _DIV expr 	{code(dividirenteros);}
+        | expr _DIV expr 	{code(dividir_entero);}
         | expr _MOD expr 	{code(modulo);}
         | expr POTENCIA expr 	{code(potencia);}
         | expr CONCATENACION expr 	{code(concatenacion);}
@@ -181,12 +181,14 @@ void yyerror(char *s)
  warning(s,(char *) 0);
 }
 
+
 void warning(char *s, char *t)
 {
  fprintf(stderr," ** %s : %s", progname,s);
  if (t) fprintf(stderr," ---> %s ",t);
  fprintf(stderr,"  (linea %d)\n",lineno);
 }
+
 
 void execerror(s,t) /* recuperacion de errores durante la ejecucion */
 char *s,*t;

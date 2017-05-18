@@ -1,7 +1,7 @@
 #include <math.h>
 
-#include "ipe.h"
-#include "ipe.tab.h"
+#include "interprete.h"
+#include "interprete.tab.h"
 
 /* Prototipo de una nueva funcion matematica */
 extern double integer(double x), Azar();
@@ -9,52 +9,70 @@ extern double integer(double x), Azar();
 extern double Log(double x), Log10(double x), Exp(double x), Sqrt(double x),
               Atan2(double x, double y);
 
-static struct{
-              char *nombre;
-	      double cval;
-	      } constantes[] = {
-	                    "PI",    3.14159265358979323846,
-	                    "E",     2.71828182845904523536,
-	                    "GAMMA", 0.57721566490153286060,
-	                    "DEG",  57.29577951308232087680,
-	                    "PHI",   1.61803398874989484820,
-	                    0,       0
-	                   };
+static struct
+{
+  char *nombre;
+  double cval;
+} constantes[] = {
+          {"PI",    3.14159265358979323846},
+          {"E",   2.71828182845904523536},
+          {"GAMMA", 0.57721566490153286060},
+          {"DEG",   57.29577951308232087680},
+          {"PHI",   1.61803398874989484820},
+          {0,     0}
+             };
 
-static struct{   /* palabras clave */
-              char *nombre;
-	      int  kval;
-	      } keywords[] = {
-			      0,           0,
-                             };
+/* Se añaden nuevas llaves para evitar el warning que da sin ellas */
 
-static struct {    /* Nombres predefinidos de funciones */
-	       char *nombre;
-	       double (*func)();
-              } funciones0[] = {
-                               "azar", Azar,
-                                0, 0
-                              },
-                funciones1 [] = {
-	                       "seno",   sin,
-		               "coseno",   cos,
-		               "atan",  atan,
-		               "log",   Log,
-		               "log10", Log10,
-		               "exp",   Exp,
-		               "raiz",  Sqrt,
-		               "entero",   integer,
-		               "abs",   fabs,
-		               0,       0
-		              },
-              funciones2[] = {"atan2", Atan2,
-                               0, 0
-                             };
+static struct
+{ /* palabras clave */
+  char *nombre;
+  int  kval;
+} keywords[] = {
+          {"si",        SI},
+          {"si_no",     SI_NO},
+          {"mientras",    MIENTRAS},          
+          {"fin_si",      FIN_SI},
+          {"entonces",    ENTONCES},
+          {"hacer",     HACER},
+          {"repetir",     REPETIR},
+          {"para",      PARA},
+          {"desde",     DESDE},
+          {"hasta",     HASTA},
+          {"paso",      PASO},
+          {"fin_para",    FIN_PARA},
+          {0,         0}
+        };
+
+static struct 
+{    /* Nombres predefinidos de funciones */ 
+  char *nombre;
+  double (*func)();
+} funciones0[] = {
+          {"azar", Azar},
+          {0,   0}
+                 },
+funciones1 [] = {
+          {"seno",  sin},
+          {"coseno",  cos},
+          {"atan",  atan},
+          {"log",   Log},
+          {"log10", Log10},
+          {"exp",   Exp},
+          {"raiz",  Sqrt},
+          {"entero",  integer},
+          {"abs",   fabs},
+          {0,     0}
+                  },
+funciones2[] = {
+          {"atan2",   Atan2},
+          {0,     0}
+                };
 /************************************************************************/
 /** Nombre: init                                                       **/
-/** Labor que desarrolla: Inserta  en la tabla de simbolos las         **/
+/** Labor que desarrolla: Inserta  en la tabla de simbolos las         **/ 
 /**        constantes y las funciones  que se encuentran en las        **/
-/**        variables globales "consts" y "funciones"                   **/
+/**        variables globales "consts" y "funciones"                   **/ 
 /** Tipo de resultado: entero "int" (tipo por defecto)                 **/
 /** Parametros: Ninguno.                                               **/
 /************************************************************************/
@@ -85,3 +103,4 @@ void init()
       s->u.ptr=funciones2[i].func;
      }
 }
+

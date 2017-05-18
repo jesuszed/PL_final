@@ -4,7 +4,7 @@ LEXICO = lexico
 CC = gcc
 CFLAGS = -c -g
 YFLAGS = -d         # Generar el fichero $(FUENTE).tab.h
-LFLAGS = -lm -lfl   # fl: biblioteca de flex; m: biblioteca matemáticalfl
+LFLAGS = -lm -ll   # fl: biblioteca de flex; m: biblioteca matemáticalfl
 OBJS= $(FUENTE).tab.o lex.yy.o  init.o   math.o   symbol.o  code.o
 
 $(FUENTE).exe: $(OBJS)

@@ -1,7 +1,7 @@
 %{
 #include "macros.h"
-#include "ipe.h"
-#include "ipe.tab.h"
+#include "interprete.h"
+#include "interprete.tab.h"
 extern char *progname;
 extern int lineno;
 char *cadena;
@@ -12,36 +12,62 @@ numero        [0-9]
 letra         [a-zA-Z]
 identificador {letra}(_?({letra}|{numero}))*
 
+_mod      (?i:_mod)            
+_div      (?i:_div)            
+_o        (?i:_o)              
+_y        (?i:_y)              
+_no       (?i:_no)             
+leer      (?i:leer)            
+leer_cadena   (?i:leer_cadena)     
+escribir    (?i:escribir)        
+escribir_cadena (?i:escribir_cadena) 
+si        (?i:SI)              
+entonces    (?i:entonces)        
+si_no       (?i:si_no)           
+fin_si      (?i:fin_si)          
+mientras    (?i:mientras)        
+hacer       (?i:hacer)           
+fin_mientras  (?i:fin_mientras)    
+repetir     (?i:repetir)         
+hasta       (?i:hasta)           
+para      (?i:para)            
+desde       (?i:desde)           
+paso      (?i:paso)            
+fin_para    (?i:fin_para)        
+_borrar     (?i:_borrar)         
+_lugar      (?i:_lugar)  
+
+
 %x ESTADO_CADENA
 %x ESTADO_COMENTARIO
 
 %%
 [ \t] { ; } /* saltar los espacios y los tabuladores */
 
-(?i:_mod)            {return _MOD;}
-(?i:_div)            {return _DIV;}
-(?i:_o)              {return _O;}
-(?i:_y)              {return _Y;}
-(?i:_no)             {return _NO;}
-(?i:leer)            {return LEER;}
-(?i:leer_cadena)     {return LEER_CADENA;}
-(?i:escribir)        {return ESCRIBIR;}
-(?i:escribir_cadena) {return ESCRIBIR_CADENA;}
-(?i:SI)              {return SI;}
-(?i:entonces)        {return ENTONCES;}
-(?i:si_no)           {return SI_NO;}
-(?i:fin_si)          {return FIN_SI;}
-(?i:mientras)        {return MIENTRAS;}
-(?i:hacer)           {return HACER;}
-(?i:fin_mientras)    {return FIN_MIENTRAS;}
-(?i:repetir)         {return REPETIR;}
-(?i:hasta)           {return HASTA;}
-(?i:para)            {return PARA;}
-(?i:desde)           {return DESDE;}
-(?i:paso)            {return PASO;}
-(?i:fin_para)        {return FIN_PARA;}
-(?i:_borrar)         {return _BORRAR;}
-(?i:_lugar)          {return _LUGAR;}
+{_mod}            {return _MOD;}
+{_div}            {return _DIV;}
+{_o}              {return _O;}
+{_y}              {return _Y;}
+{_no}             {return _NO;}
+{leer}            {return LEER;}
+{leer_cadena}     {return LEER_CADENA;}
+{escribir}        {return ESCRIBIR;}
+{escribir_cadena} {return ESCRIBIR_CADENA;}
+{si}              {return SI;}
+{entonces}        {return ENTONCES;}
+{si_no}           {return SI_NO;}
+{fin_si}          {return FIN_SI;}
+{mientras}        {return MIENTRAS;}
+{hacer}           {return HACER;}
+{fin_mientras}    {return FIN_MIENTRAS;}
+{repetir}         {return REPETIR;}
+{hasta}           {return HASTA;}
+{para}            {return PARA;}
+{desde}           {return DESDE;}
+{paso}            {return PASO;}
+{fin_para}        {return FIN_PARA;}
+{_borrar}         {return _BORRAR;}
+{_lugar}          {return _LUGAR;}
 
 {numero}+(\.{numero}+)?([eE][+-]?{numero}+)? {double d;
                                    sscanf(yytext,"%lf",&d);
