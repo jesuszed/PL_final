@@ -654,9 +654,7 @@ void paracode()
   execute(*((Inst **)(savepc+2)));
   paso = pop();
 
-  if (paso.val == 0 ||
-     (paso.val > 0) && (desde.val > hasta.val) ||
-     (paso.val < 0) && (desde.val < hasta.val)) {
+  if (paso.val == 0 ||  ((paso.val > 0) && (desde.val > hasta.val)) ||  ((paso.val < 0) && (desde.val < hasta.val))) {
     execerror (" Bucle infinito ", (char *) 0);
   }
 
