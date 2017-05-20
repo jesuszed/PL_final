@@ -10,7 +10,7 @@
   Centro:        Escuela Politécnica Superior de Córdoba
   Universidad de Córdoba
  
-  Curso académico: 2016 - 2017
+  Curso académico: 2015 - 2016
 
   Fichero de ejemplo nº 6 para el intérprete de pseudocódigo en español: ipe.exe
 #
@@ -18,7 +18,7 @@
 _borrar;
 
 _lugar(3,10);
-escribir_cadena('Ejemplo de cambio del tipo de valo \n');
+escribir_cadena('Ejemplo de cambio del tipo de valor \n');
 
 escribir_cadena('Introduce un número --> ');
 leer(dato);

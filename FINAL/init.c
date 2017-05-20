@@ -15,11 +15,11 @@ static struct
   double cval;
 } constantes[] = {
           {"PI",    3.14159265358979323846},
-          {"E",   2.71828182845904523536},
+          {"E",   	2.71828182845904523536},
           {"GAMMA", 0.57721566490153286060},
           {"DEG",   57.29577951308232087680},
           {"PHI",   1.61803398874989484820},
-          {0,     0}
+          {0,     	0}
              };
 
 /* Se añaden nuevas llaves para evitar el warning que da sin ellas */
@@ -29,19 +29,19 @@ static struct
   char *nombre;
   int  kval;
 } keywords[] = {
-          {"si",        SI},
-          {"si_no",     SI_NO},
-          {"mientras",    MIENTRAS},          
-          {"fin_si",      FIN_SI},
-          {"entonces",    ENTONCES},
-          {"hacer",     HACER},
-          {"repetir",     REPETIR},
-          {"para",      PARA},
-          {"desde",     DESDE},
-          {"hasta",     HASTA},
-          {"paso",      PASO},
-          {"fin_para",    FIN_PARA},
-          {0,         0}
+		{"si",				SI},
+		{"si_no",			SI_NO},
+		{"mientras",		MIENTRAS},          
+		{"fin_si",			FIN_SI},
+		{"entonces",		ENTONCES},
+		{"hacer",			HACER},
+		{"repetir",			REPETIR},
+		{"para",			PARA},
+		{"desde",			DESDE},
+		{"hasta",			HASTA},
+		{"paso",			PASO},
+		{"fin_para",	 	FIN_PARA},
+		{0,				   0}
         };
 
 static struct 
@@ -53,16 +53,16 @@ static struct
           {0,   0}
                  },
 funciones1 [] = {
-          {"seno",  sin},
-          {"coseno",  cos},
-          {"atan",  atan},
-          {"log",   Log},
-          {"log10", Log10},
-          {"exp",   Exp},
-          {"raiz",  Sqrt},
-          {"entero",  integer},
-          {"abs",   fabs},
-          {0,     0}
+			{"seno",		sin},
+			{"coseno",		cos},
+			{"atan",		atan},
+			{"log",			Log},
+			{"log10",		Log10},
+			{"exp",			Exp},
+			{"raiz",		Sqrt},
+			{"entero",		integer},
+			{"abs",			fabs},
+			{0,				0}
                   },
 funciones2[] = {
           {"atan2",   Atan2},

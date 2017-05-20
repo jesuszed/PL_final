@@ -41,11 +41,6 @@ _lugar 			(?i:_lugar)
 %%
 [ \t] { ; } /* saltar los espacios y los tabuladores */
 
-{numero}+\.?|{numero}*\.{numero}+ {	double d;  
-                                   		sscanf(yytext,"%lf",&d);
-                                 		/* Instala el numero en la tabla de simbolos */
-				   						yylval.sym=install("",NUMBER,d); 
-				   						return NUMBER;}
 
 {_mod}            {return _MOD;}
 {_div}            {return _DIV;}
@@ -82,6 +77,7 @@ _lugar 			(?i:_lugar)
 					int i=0;
 					while(yytext[i])
 					{
+                        /* Pasamos todo a minusculas */
 						yytext[i] =  tolower(yytext[i]);
 						i++;
 					}
@@ -98,7 +94,7 @@ _lugar 			(?i:_lugar)
 ">="					{return MAYOR_IGUAL;}
 "<="					{return MENOR_IGUAL;}
 "=="					{return IGUAL;}
-"!="					{return DISTINTO;}
+"<>"					{return DISTINTO;}
 ">"						{return MAYOR_QUE;}
 "<"						{return MENOR_QUE;}
 "**"					{return POTENCIA;}

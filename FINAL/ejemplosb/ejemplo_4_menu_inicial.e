@@ -10,7 +10,7 @@
   Centro:        Escuela Politécnica Superior de Córdoba
   Universidad de Córdoba
  
-  Curso académico: 2016 - 2017
+  Curso académico: 2015 - 2016
 
   Fichero de ejemplo nº 4 para el intérprete de pseudocódigo en español: ipe.exe
 #
@@ -58,7 +58,6 @@ repetir
  leer(opcion);
 
  _borrar;
-
  si (opcion = 0)        
     entonces  
 	@ Fin del programa

@@ -10,7 +10,7 @@
   Centro:        Escuela Politécnica Superior de Córdoba
   Universidad de Córdoba
  
-  Curso académico: 2015 - 2016
+  Curso académico: 2016 - 2017
 
   Fichero de ejemplo nº 5 para el intérprete de pseudocódigo en español: ipe.exe
 #
@@ -71,26 +71,25 @@ repetir
        @ Factorial de un número
 	si (opcion = 1)
    	    entonces
-_lugar(10,10);
-escribir_cadena(' Factorial de un numero ');
+                _lugar(10,10);
+		escribir_cadena(' Factorial de un numero  ');
 
-_lugar(11,10);
-escribir_cadena(' Introduce un numero entero ');
-leer(N);
+                _lugar(11,10);
+		escribir_cadena(' Introduce un numero entero ');
+		leer(N);
 
-factorial := 1;
+        	factorial := 1;
 
-para i desde 2 hasta N paso 1 hacer
-    factorial := factorial * i;
-fin_para;
+       		para i desde 2 hasta N paso 1 hacer
+	            factorial := factorial * i;
+        	fin_para;
 
-@ Se muestra el resultado
-
-_lugar(15,10);
-escribir_cadena(' El factorial de ');
-escribir(N);
-escribir_cadena(' es ');
-escribir(factorial);
+        	@ Resultado
+	        _lugar(15,10);
+		escribir_cadena(' El factorial de ');
+		escribir(N);
+		escribir_cadena(' es ');
+		escribir(factorial);
     
    	@ Máximo común divisor
 	si_no 

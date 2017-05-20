@@ -28,7 +28,7 @@ leer(N);
 factorial := 1;
 
 para i desde 2 hasta N paso 1 hacer
-    factorial := factorial * i;
+	factorial := factorial * i;
 fin_para;
 
 @ Se muestra el resultado
