@@ -713,7 +713,7 @@ void cadenapush() {
 }
 
 void paracode() {
-  Datum d, expr1, expr2, expr3;
+  Datum d, desde, hasta, paso;
   Inst *savepc = pc;
   Symbol *variable;
 
@@ -722,23 +722,23 @@ void paracode() {
   variable->subtipo = NUMBER;
 
   execute(*((Inst **)(savepc)));
-  expr1 = pop();
+  desde = pop();
   execute(*((Inst **)(savepc+1)));
-  expr2 = pop();
+  hasta = pop();
   execute(*((Inst **)(savepc+2)));
-  expr3 = pop();
+  paso = pop();
 
-  if (expr3.val == 0 ||
-     (expr3.val > 0) && (expr1.val > expr2.val) ||
-     (expr3.val < 0) && (expr1.val < expr2.val)) {
+  if (paso.val == 0 ||
+     (paso.val > 0) && (desde.val > hasta.val) ||
+     (paso.val < 0) && (desde.val < hasta.val)) {
     execerror (" Bucle infinito ", (char *) 0);
   }
-  if (expr3.val > 0) {
-    for (variable->u.val = expr1.val; variable->u.val <= expr2.val; variable->u.val += expr3.val) {
+  if (paso.val > 0) {
+    for (variable->u.val = desde.val; variable->u.val <= hasta.val; variable->u.val += paso.val) {
       execute(*((Inst **)(savepc+3)));
     }
   } else {
-    for (variable->u.val = expr1.val; variable->u.val >= expr2.val; variable->u.val -= expr3.val) {
+    for (variable->u.val = desde.val; variable->u.val >= hasta.val; variable->u.val -= paso.val) {
       execute(*((Inst **)(savepc+3)));
     }
   }
