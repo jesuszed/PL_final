@@ -1,22 +1,3 @@
-#
-  Asignatura:    Procesadores de Lenguajes
-
-  Titulación:    Ingeniería Informática
-  Especialidad:  Computación
-  Curso:         Tercero
-  Cuatrimestre:  Segundo
-
-  Departamento:  Informática y Análisis Numérico
-  Centro:        Escuela Politécnica Superior de Córdoba
-  Universidad de Córdoba
- 
-  Curso académico: 2016 - 2017
-
-  Fichero de ejemplo nº 3 para el intérprete de pseudocódigo en español: ipe.exe
-#
- 
-@ Máximo común divisor mediante el algoritmo de Euclides
-
 _lugar(10,10);
 escribir_cadena(' Máximo común divisor de dos números ');
 

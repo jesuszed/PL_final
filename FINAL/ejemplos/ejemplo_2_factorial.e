@@ -1,22 +1,3 @@
-#
-  Asignatura:    Procesadores de Lenguajes
-
-  Titulación:    Ingeniería Informática
-  Especialidad:  Computación
-  Curso:         Tercero
-  Cuatrimestre:  Segundo
-
-  Departamento:  Informática y Análisis Numérico
-  Centro:        Escuela Politécnica Superior de Córdoba
-  Universidad de Córdoba
- 
-  Curso académico: 2016 - 2017
-
-  Fichero de ejemplo nº 2 para el intérprete de pseudocódigo en español: ipe.exe
-#
-
-@ Factorial de un número
-
 _borrar;
 _lugar(10,10);
 escribir_cadena(' Factorial de un numero ');
@@ -26,6 +7,8 @@ escribir_cadena(' Introduce un numero entero ');
 leer(N);
 
 factorial := 1;
+
+@ Algoritmo para factorial 
 
 para i desde 2 hasta N paso 1 hacer
 	factorial := factorial * i;
