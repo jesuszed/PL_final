@@ -151,12 +151,11 @@ void fpecatch();
 int main(int argc, char *argv[])
 {
 
-
-
  /* Si se invoca el int�rprete con un fichero de entrada */
  /* entonces se establece como dispositivo de entrada para yylex() */
  if (argc == 2) yyin = fopen(argv[1],"r");
-
+ else
+  printf("Bievenido al interprete interactivo: \n\n");
 
  progname=argv[0];
 

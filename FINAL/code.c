@@ -639,24 +639,24 @@ void negacion()
 
 void whilecode()
 {
- Datum d;
- Inst *savepc = pc;    /* Puntero auxiliar para guardar pc */
+	Datum d;
+	Inst *savepc = pc;    /* Puntero auxiliar para guardar pc */
 
- execute(savepc+2);    /* Ejecutar codigo de la condicion */
+	execute(savepc+2);    /* Ejecutar codigo de la condicion */
 
- d=pop();    /* Obtener el resultado de la condicion de la pila */
+	d=pop();    /* Obtener el resultado de la condicion de la pila */
 
- while(d.val)   /* Mientras se cumpla la condicion */
-    {
-     execute(*((Inst **)(savepc)));   /* Ejecutar codigo */
-     execute(savepc+2);               /* Ejecutar condicion */
-     d=pop();              /* Obtener el resultado de la condicion */
+	while(d.val)   /* Mientras se cumpla la condicion */
+	{
+		execute(*((Inst **)(savepc)));   /* Ejecutar codigo */
+		execute(savepc+2);               /* Ejecutar condicion */
+		d=pop();              /* Obtener el resultado de la condicion */
     }
 
 /* Asignar a pc la posicion del vector de instrucciones que contiene */
 /* la siguiente instruccion a ejecutar */
 
- pc= *((Inst **)(savepc+1));
+ pc = *((Inst **)(savepc+1));
 }
 
 void ifcode()
@@ -713,35 +713,45 @@ void cadenapush() {
 }
 
 void paracode() {
-  Datum d, desde, hasta, paso;
-  Inst *savepc = pc;
-  Symbol *variable;
+	Datum d, desde, hasta, paso;
+	Inst *savepc = pc;
+	Symbol *variable;
+	
+	variable = *((Symbol **)(savepc+5));
+	variable->tipo = VAR;
+	variable->subtipo = NUMBER;
 
-  variable = *((Symbol **)(savepc+5));
-  variable->tipo = VAR;
-  variable->subtipo = NUMBER;
+	execute(*((Inst **)(savepc)));
+	desde = pop();
+	execute(*((Inst **)(savepc+1)));
+	hasta = pop();
+	execute(*((Inst **)(savepc+2)));
+	paso = pop();
 
-  execute(*((Inst **)(savepc)));
-  desde = pop();
-  execute(*((Inst **)(savepc+1)));
-  hasta = pop();
-  execute(*((Inst **)(savepc+2)));
-  paso = pop();
 
-  if (paso.val == 0 ||
-     (paso.val > 0) && (desde.val > hasta.val) ||
-     (paso.val < 0) && (desde.val < hasta.val)) {
-    execerror (" Bucle infinito ", (char *) 0);
-  }
-  if (paso.val > 0) {
-    for (variable->u.val = desde.val; variable->u.val <= hasta.val; variable->u.val += paso.val) {
-      execute(*((Inst **)(savepc+3)));
-    }
-  } else {
-    for (variable->u.val = desde.val; variable->u.val >= hasta.val; variable->u.val -= paso.val) {
-      execute(*((Inst **)(savepc+3)));
-    }
-  }
+	/* Evitar bucles infinitos */
+	if (paso.val == 0 ||
+		(paso.val > 0) && (desde.val > hasta.val) ||
+		(paso.val < 0) && (desde.val < hasta.val)) 
+	{
+    		execerror (" Bucle infinito ", (char *) 0);
+  	}
+
+  	/* Bucle paso positivo, ascendente */
+ 	if (paso.val > 0) {
+		for (variable->u.val = desde.val; variable->u.val <= hasta.val; variable->u.val += paso.val) 
+		{
+
+			execute(*((Inst **)(savepc+3)));
+    	}
+	} else {
+		/* Bucle paso negativo, descendente */
+		for (variable->u.val = desde.val; variable->u.val > hasta.val; variable->u.val += paso.val) 
+		{
+
+			execute(*((Inst **)(savepc+3)));
+    	}
+	}
 }
 
 void repetircode() {
